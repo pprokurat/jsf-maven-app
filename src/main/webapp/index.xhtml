@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Kino - Repertuar</title>
+    <script type="text/javascript">
+        PrimeFaces.locales['pl'] = {
+            closeText: 'Zamknij',
+            prevText: 'Poprzedni',
+            nextText: 'Następny',
+            monthNames: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
+            monthNamesShort: ['Sty', 'Lut', 'Mar', 'Kwi', 'Maj', 'Cze', 'Lip', 'Sie', 'Wrz', 'Paź', 'Lis', 'Gru'],
+            dayNames: ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'],
+            dayNamesShort: ['Nie', 'Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'So'],
+            dayNamesMin: ['N', 'P', 'W', 'Ś', 'Cz', 'P', 'S'],
+            weekHeader: 'Tydzień',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: '',
+            timeOnlyTitle: 'Tylko czas',
+            timeText: 'Czas',
+            hourText: 'Godzina',
+            minuteText: 'Minuta',
+            secondText: 'Sekunda',
+            currentText: 'Teraz',
+            ampm: false,
+            month: 'Miesiąc',
+            week: 'Tydzień',
+            day: 'Dzień',
+            allDayText: 'Cały dzień'
+        };
+    </script>
+
+    <style type="text/css">
+        body {
+            background-color: #b5b5b5;
+        }
+        .h1{
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        #main-container {
+            background-color: white;
+            max-width: 1024px;
+            height: 100vh;
+            margin: 40px auto;
+            display: flex;
+            justify-content: center;
+        }
+        #shows-and-calendar-container {
+            margin-top: 20px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        #shows-list {
+            max-width: 600px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        #calendar {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    </style>
+</h:head>
+<h:body>
+    <div id="main-container">
+        <div id="shows-and-calendar-container">
+            <div id="shows-list">
+                <h:form>
+                    <h1>Repertuar</h1>
+                    <p:dataTable var="show" value="#{showTimesBean.showsList}" scrollable="true" scrollHeight="190">
+                        <p:column headerText="Film">
+                            <h:outputText value="#{show.movieName}"/>
+                        </p:column>
+                        <p:column headerText="Godzina seansu">
+                            <h:outputText value="#{show.showTime}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+            <div id="calendar">
+                <h1>Wybierz datę</h1>
+                <p:calendar id="inline" locale="pl" value="#{calendarView.date1}" mode="inline" />
+            </div>
+        </div>
+    </div>
+</h:body>
+</html>
