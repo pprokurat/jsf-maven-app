@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -23,7 +23,7 @@ import javax.persistence.criteria.CriteriaQuery;
  * @author patry
  */
 @Named("showTimesBean")
-@ApplicationScoped
+@RequestScoped
 public class ShowTimesBean implements Serializable {
 
     private List<ShowtimeEntity> showsList;
