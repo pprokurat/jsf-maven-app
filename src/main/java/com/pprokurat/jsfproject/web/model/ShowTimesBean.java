@@ -9,12 +9,13 @@ import com.pprokurat.jsfproject.hibernate.entity.ShowtimeEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.primefaces.event.SelectEvent;
 
-import java.io.File;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -23,11 +24,14 @@ import javax.persistence.criteria.CriteriaQuery;
  * @author patry
  */
 @Named("showTimesBean")
-@RequestScoped
+@SessionScoped
 public class ShowTimesBean implements Serializable {
 
     private List<ShowtimeEntity> showsList;
-    
+    private Date datetime = new Date();
+    private java.sql.Date date = new java.sql.Date(datetime.getTime());
+
+
     @PostConstruct
     public void loadShows(){
 
@@ -39,6 +43,12 @@ public class ShowTimesBean implements Serializable {
 
         showsList = session.createQuery(criteriaQuery).getResultList();
         session.close();
+    }
+
+    public void dateSelectedAction(SelectEvent event){
+        datetime = (Date) event.getObject();
+        date = new java.sql.Date(datetime.getTime());
+        System.out.println("Date Selected Is :: "+date);
     }
 
     /**
@@ -54,5 +64,22 @@ public class ShowTimesBean implements Serializable {
     public void setShowsList(List<ShowtimeEntity> showsList) {
         this.showsList = showsList;
     }
-    
+
+    public Date getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(Date datetime) {
+        this.datetime = datetime;
+    }
+
+    public java.sql.Date getDate() {
+        return date;
+    }
+
+    public void setDate(java.sql.Date date) {
+        this.date = date;
+    }
+
+
 }
