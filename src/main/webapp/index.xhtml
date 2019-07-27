@@ -56,14 +56,14 @@
             justify-content: center;
         }
 
-        #shows-and-calendar-container {
+        #screenings-and-calendar-container {
             margin-top: 20px;
             display: flex;
             align-items: flex-start;
             justify-content: center;
         }
 
-        #shows-list {
+        #screenings-list {
             max-width: 600px;
             padding-left: 20px;
             padding-right: 20px;
@@ -77,27 +77,31 @@
 </h:head>
 <h:body>
     <div id="main-container">
-        <div id="shows-and-calendar-container">
-            <div id="shows-list">
-                <h:form>
+        <div id="screenings-and-calendar-container">
+            <div id="screenings-list">
+                <h:form id="screenings-list-form">
                     <h1>Repertuar</h1>
-                    <p:dataTable var="show" value="#{showTimesBean.showsList}" scrollable="true" scrollHeight="190">
+                    <p:dataTable id="screeningsTable" var="screening" value="#{screeningsBean.screeningsList}"
+                                 scrollable="true" scrollHeight="190">
                         <p:column headerText="Film">
-                            <h:outputText value="#{show.movieName}"/>
+                            <h:outputText value="#{screening.movieId}"/>
                         </p:column>
                         <p:column headerText="Godzina seansu">
-                            <h:outputText value="#{show.showTime}"/>
+                            <h:outputText value="#{screening.time}"/>
                         </p:column>
                     </p:dataTable>
                 </h:form>
             </div>
             <div id="calendar">
-                <h1>Wybierz datę</h1>
-                <h:form>
-                    <p:calendar id="inline" locale="pl" value="#{showTimesBean.datetime}" mode="inline">
-                        <p:ajax event="dateSelect" listener="#{showTimesBean.dateSelectedAction}" update="dateTest" />
+                <h:form id="calendar-form">
+                    <h1>Wybierz datę</h1>
+                    <p:calendar id="inline" locale="pl" value="#{screeningsBean.datetime}" mode="inline">
+                        <p:ajax event="dateSelect" listener="#{screeningsBean.dateSelectedAction}"
+                                update=":calendar-form:selectedDate :screenings-list-form:screeningsTable"/>
                     </p:calendar>
-                    <h:outputText value="#{showTimesBean.date}" id="dateTest"/>
+                    <br/>
+                    <h:outputLabel><b>Wybrana data: </b></h:outputLabel>
+                    <h:outputText value="#{screeningsBean.date}" id="selectedDate"/>
                 </h:form>
             </div>
         </div>
