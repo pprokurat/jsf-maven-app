@@ -14,6 +14,7 @@ import org.primefaces.event.SelectEvent;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -33,6 +34,8 @@ public class ScreeningsBean implements Serializable {
     private List<ScreeningEntity> screeningsList;
     private Date datetime = new Date();
     private java.sql.Date date = new java.sql.Date(datetime.getTime());
+    private TimeZone timeZone = TimeZone.getTimeZone("Europe/Warsaw");
+
 
     @PostConstruct
     public void loadScreenings(){
@@ -50,7 +53,7 @@ public class ScreeningsBean implements Serializable {
         TypedQuery<ScreeningEntity> query = session.createQuery(criteria);
 
         screeningsList = query.getResultList();
-                
+
         session.close();
     }
 
@@ -88,6 +91,14 @@ public class ScreeningsBean implements Serializable {
 
     public void setDate(java.sql.Date date) {
         this.date = date;
+    }
+
+    public TimeZone getTimeZone() {
+        return timeZone;
+    }
+
+    public void setTimeZone(TimeZone timeZone) {
+        this.timeZone = timeZone;
     }
 
 
