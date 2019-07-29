@@ -1,53 +1,65 @@
 package com.pprokurat.jsfproject.hibernate.entity;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.Objects;
 
 @Entity
-@Table(name = "screening", schema = "jsf-project-db", catalog = "")
+@Table(name = "screening", schema = "jsf-project-db")
 public class ScreeningEntity {
-    private int id;
-    private int movieId;
-    private int roomId;
-    private Date date;
-    private Time time;
 
     @Id
-    @Column(name = "ID")
-    public int getId() {
-        return id;
-    }
+    @Column(name = "screening_id", nullable = false)
+    private int screeningId;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    @ManyToOne
+    @JoinColumn(name = "movie_id", nullable = false)
+    private MovieEntity movieEntity;
 
     @Basic
-    @Column(name = "movie_ID")
-    public int getMovieId() {
-        return movieId;
-    }
-
-    public void setMovieId(int movieId) {
-        this.movieId = movieId;
-    }
+    @Column(name = "room_id", nullable = false)
+    private int roomId;
 
     @Basic
-    @Column(name = "room_ID")
+    @Column(name = "date", nullable = false)
+    private Date date;
+
+    @Basic
+    @Column(name = "time", nullable = false)
+    private Time time;
+
+
+    public int getScreeningId() {
+        return screeningId;
+    }
+
+    public void setScreeningId(int screeningId) {
+        this.screeningId = screeningId;
+    }
+
+
+    public MovieEntity getMovieEntity() { return movieEntity; }
+
+    public void setMovieEntity(MovieEntity movieEntity) { this.movieEntity = movieEntity; }
+
+
     public int getRoomId() { return roomId; }
 
     public void setRoomId(int roomId) { this.roomId = roomId; }
 
-    @Basic
-    @Column(name = "date")
+
     public Date getDate() { return date; }
 
     public void setDate(Date date) { this.date = date; }
 
-    @Basic
-    @Column(name = "time")
+
     public Time getTime() { return time; }
 
     public void setTime(Time time) { this.time = time; }
@@ -58,8 +70,8 @@ public class ScreeningEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ScreeningEntity that = (ScreeningEntity) o;
-        return id == that.id &&
-                Objects.equals(movieId, that.movieId) &&
+        return screeningId == that.screeningId &&
+                Objects.equals(movieEntity, that.movieEntity) &&
                 Objects.equals(roomId, that.roomId) &&
                 Objects.equals(date, that.date) &&
                 Objects.equals(time, that.time);
@@ -67,6 +79,6 @@ public class ScreeningEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, movieId, roomId, date, time);
+        return Objects.hash(screeningId, movieEntity, roomId, date, time);
     }
 }

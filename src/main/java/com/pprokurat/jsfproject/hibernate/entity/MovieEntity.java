@@ -8,23 +8,23 @@ import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
-@Table(name = "movie", schema = "jsf-project-db", catalog = "")
+@Table(name = "movie", schema = "jsf-project-db")
 public class MovieEntity {
-    private int id;
+    private int movieId;
     private String movieName;
 
     @Id
-    @Column(name = "ID")
-    public int getId() {
-        return id;
+    @Column(name = "movie_id", nullable = false)
+    public int getMovieId() {
+        return movieId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
     }
 
     @Basic
-    @Column(name = "movie_name")
+    @Column(name = "movie_name", nullable = false, length = 100)
     public String getMovieName() {
         return movieName;
     }
@@ -33,18 +33,18 @@ public class MovieEntity {
         this.movieName = movieName;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MovieEntity that = (MovieEntity) o;
-        return id == that.id &&
+        return movieId == that.movieId &&
                 Objects.equals(movieName, that.movieName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, movieName);
+        return Objects.hash(movieId, movieName);
     }
+
 }

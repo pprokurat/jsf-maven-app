@@ -40,7 +40,7 @@
 
     <style type="text/css">
         body {
-            background-color: #b5b5b5;
+            background-color: #575757;
         }
 
         .h1 {
@@ -83,9 +83,9 @@
                 <h:form id="screenings-list-form">
                     <h1>Repertuar</h1>
                     <p:dataTable id="screeningsTable" var="screening" value="#{screeningsBean.screeningsList}"
-                                 scrollable="true" scrollHeight="190">
+                                 scrollable="true" scrollHeight="215" emptyMessage="Brak seansów w wybranym dniu.">
                         <p:column headerText="Film">
-                            <h:outputText value="#{screening.movieId}"/>
+                            <h:outputText value="#{screening.movieEntity.movieName}"/>
                         </p:column>
                         <p:column headerText="Godzina seansu">
                             <h:outputText value="#{screening.time}">
