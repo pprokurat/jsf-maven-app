@@ -87,7 +87,7 @@
                         <p:column headerText="Film">
                             <h:outputText value="#{screening.movieEntity.movieName}"/>
                         </p:column>
-                        <p:column headerText="Godzina seansu">
+                        <p:column headerText="Godzina seansu" style="width: 30%">
                             <h:outputText value="#{screening.time}">
                                 <o:converter converterId="javax.faces.DateTime" pattern="HH:mm" timeZone="#{screeningsBean.timeZone}" />
                             </h:outputText>

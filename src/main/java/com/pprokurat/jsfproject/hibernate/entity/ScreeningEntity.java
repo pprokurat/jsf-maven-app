@@ -23,9 +23,9 @@ public class ScreeningEntity {
     @JoinColumn(name = "movie_id", nullable = false)
     private MovieEntity movieEntity;
 
-    @Basic
-    @Column(name = "room_id", nullable = false)
-    private int roomId;
+    @ManyToOne
+    @JoinColumn(name = "room_id", nullable = false)
+    private RoomEntity roomEntity;
 
     @Basic
     @Column(name = "date", nullable = false)
@@ -50,9 +50,9 @@ public class ScreeningEntity {
     public void setMovieEntity(MovieEntity movieEntity) { this.movieEntity = movieEntity; }
 
 
-    public int getRoomId() { return roomId; }
+    public RoomEntity getRoomEntity() { return roomEntity; }
 
-    public void setRoomId(int roomId) { this.roomId = roomId; }
+    public void setRoomEntity(RoomEntity roomEntity) { this.roomEntity = roomEntity; }
 
 
     public Date getDate() { return date; }
@@ -72,13 +72,13 @@ public class ScreeningEntity {
         ScreeningEntity that = (ScreeningEntity) o;
         return screeningId == that.screeningId &&
                 Objects.equals(movieEntity, that.movieEntity) &&
-                Objects.equals(roomId, that.roomId) &&
+                Objects.equals(roomEntity, that.roomEntity) &&
                 Objects.equals(date, that.date) &&
                 Objects.equals(time, that.time);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(screeningId, movieEntity, roomId, date, time);
+        return Objects.hash(screeningId, movieEntity, roomEntity, date, time);
     }
 }
