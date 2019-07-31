@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
-@Table(name = "room", schema = "jsf-project-db", catalog = "")
+@Table(name = "room", schema = "jsf-project-db")
 public class RoomEntity {
     private int roomId;
     private String description;
