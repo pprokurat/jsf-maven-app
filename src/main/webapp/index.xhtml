@@ -84,12 +84,13 @@
                     <h1>Repertuar</h1>
                     <p:dataTable id="screeningsTable" var="screening" value="#{screeningsBean.screeningsList}"
                                  scrollable="true" scrollHeight="215" emptyMessage="Brak seansów w wybranym dniu.">
-                        <p:column headerText="Film">
+                        <p:column headerText="Film" sortBy="#{screening.movieEntity.movieName}">
                             <h:outputText value="#{screening.movieEntity.movieName}"/>
                         </p:column>
-                        <p:column headerText="Godzina seansu" style="width: 30%">
+                        <p:column headerText="Godzina seansu" style="width: 30%" sortBy="#{screening.time}">
                             <h:outputText value="#{screening.time}">
-                                <o:converter converterId="javax.faces.DateTime" pattern="HH:mm" timeZone="#{screeningsBean.timeZone}" />
+                                <o:converter converterId="javax.faces.DateTime" pattern="HH:mm"
+                                             timeZone="#{screeningsBean.timeZone}" />
                             </h:outputText>
                         </p:column>
                     </p:dataTable>
@@ -98,7 +99,8 @@
             <div id="calendar">
                 <h:form id="calendar-form">
                     <h1>Wybierz datę</h1>
-                    <p:calendar id="inline" locale="pl" value="#{screeningsBean.datetime}" mode="inline">
+                    <p:calendar id="inline" locale="pl" value="#{screeningsBean.datetime}" mode="inline"
+                                mindate="#{screeningsBean.currentDate}">
                         <p:ajax event="dateSelect" listener="#{screeningsBean.dateSelectedAction}"
                                 update=":calendar-form:selectedDate :screenings-list-form:screeningsTable"/>
                     </p:calendar>

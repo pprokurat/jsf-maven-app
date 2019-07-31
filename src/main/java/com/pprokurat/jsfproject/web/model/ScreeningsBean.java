@@ -32,6 +32,7 @@ import javax.persistence.criteria.Root;
 public class ScreeningsBean implements Serializable {
 
     private List<ScreeningEntity> screeningsList;
+    private Date currentDate = new Date();
     private Date datetime = new Date();
     private java.sql.Date date = new java.sql.Date(datetime.getTime());
     private TimeZone timeZone = TimeZone.getTimeZone("Europe/Warsaw");
@@ -76,6 +77,10 @@ public class ScreeningsBean implements Serializable {
     public void setScreeningsList(List<ScreeningEntity> screeningsList) {
         this.screeningsList = screeningsList;
     }
+
+    public Date getCurrentDate() { return currentDate; }
+
+    public void setCurrentDate(Date currentDate) { this.currentDate = currentDate; }
 
     public Date getDatetime() {
         return datetime;
