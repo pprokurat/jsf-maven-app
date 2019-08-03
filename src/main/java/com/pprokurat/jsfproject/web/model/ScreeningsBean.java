@@ -12,11 +12,13 @@ import org.hibernate.cfg.Configuration;
 import org.primefaces.event.SelectEvent;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -32,7 +34,6 @@ import javax.persistence.criteria.Root;
 public class ScreeningsBean implements Serializable {
 
     private List<ScreeningEntity> screeningsList;
-    private Date currentDate = new Date();
     private Date datetime = new Date();
     private java.sql.Date date = new java.sql.Date(datetime.getTime());
     private TimeZone timeZone = TimeZone.getTimeZone("Europe/Warsaw");
@@ -77,10 +78,6 @@ public class ScreeningsBean implements Serializable {
     public void setScreeningsList(List<ScreeningEntity> screeningsList) {
         this.screeningsList = screeningsList;
     }
-
-    public Date getCurrentDate() { return currentDate; }
-
-    public void setCurrentDate(Date currentDate) { this.currentDate = currentDate; }
 
     public Date getDatetime() {
         return datetime;
