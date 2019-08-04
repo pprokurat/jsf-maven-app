@@ -29,6 +29,6 @@
         <mapping class="com.pprokurat.jsfproject.hibernate.entity.RoomEntity"/>
         <mapping class="com.pprokurat.jsfproject.hibernate.entity.RoomSeatEntity"/>
         <mapping class="com.pprokurat.jsfproject.hibernate.entity.ScreeningSeatEntity"/>
-        <mapping class="com.pprokurat.jsfproject.hibernate.entity.SeatStatusDictionaryEntity"/>
+        <mapping class="com.pprokurat.jsfproject.hibernate.entity.ReservationEntity"/>
     </session-factory>
 </hibernate-configuration>

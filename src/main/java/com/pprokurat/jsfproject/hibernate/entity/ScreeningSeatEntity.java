@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Objects;
 
@@ -25,13 +26,13 @@ public class ScreeningSeatEntity {
     @JoinColumn(name  ="room_seat_id", nullable = false)
     private RoomSeatEntity roomSeatId;
 
-    @ManyToOne
-    @JoinColumn(name = "screening_seat_status", nullable = false)
-    private SeatStatusDictionaryEntity screeningSeatStatus;
-
     @Basic
-    @Column(name = "reservation_id", nullable = true)
-    private Integer reservationId;
+    @Column(name = "status", nullable = false)
+    private char screeningSeatStatus;
+
+    @ManyToOne
+    @JoinColumn(name = "reservation_id", nullable = true)
+    private ReservationEntity reservationEntity;
 
 
     public int getScreeningSeatId() {
@@ -60,21 +61,21 @@ public class ScreeningSeatEntity {
         this.roomSeatId = roomSeatId;
     }
 
-    public SeatStatusDictionaryEntity getScreeningSeatStatus() {
+    public char getScreeningSeatStatus() {
         return screeningSeatStatus;
     }
 
-    public void setScreeningSeatStatus(SeatStatusDictionaryEntity screeningSeatStatus) {
+    public void setScreeningSeatStatus(char screeningSeatStatus) {
         this.screeningSeatStatus = screeningSeatStatus;
     }
 
 
-    public Integer getReservationId() {
-        return reservationId;
+    public ReservationEntity getReservationEntity() {
+        return reservationEntity;
     }
 
-    public void setReservationId(Integer reservationId) {
-        this.reservationId = reservationId;
+    public void setReservationEntity(ReservationEntity reservationEntity) {
+        this.reservationEntity = reservationEntity;
     }
 
     @Override
@@ -86,11 +87,11 @@ public class ScreeningSeatEntity {
                 screeningId == that.screeningId &&
                 roomSeatId == that.roomSeatId &&
                 screeningSeatStatus == that.screeningSeatStatus &&
-                Objects.equals(reservationId, that.reservationId);
+                Objects.equals(reservationEntity, that.reservationEntity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(screeningSeatId, screeningId, roomSeatId, screeningSeatStatus, reservationId);
+        return Objects.hash(screeningSeatId, screeningId, roomSeatId, screeningSeatStatus, reservationEntity);
     }
 }

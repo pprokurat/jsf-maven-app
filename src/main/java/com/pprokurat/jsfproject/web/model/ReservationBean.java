@@ -9,6 +9,15 @@ import java.io.Serializable;
 public class ReservationBean implements Serializable {
 
     private String email;
+    private int columns = 10;
+
+    public int getColumns() {
+        return columns;
+    }
+
+    public void setColumns(int columns) {
+        this.columns = columns;
+    }
 
     public String getEmail() {
         return email;
