@@ -12,13 +12,11 @@ import org.hibernate.cfg.Configuration;
 import org.primefaces.event.SelectEvent;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
