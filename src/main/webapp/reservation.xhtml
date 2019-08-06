@@ -36,11 +36,34 @@
             justify-content: center;
         }
 
-        #room-plan {
+        #room-plan-panel {
             width: 70%;
             max-width: 600px;
             padding-left: 20px;
             padding-right: 20px;
+        }
+
+        #room-plan {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #screen {
+            background-color: black;
+            color: white;
+            width: 90%;
+            text-align: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            font-size: 16pt;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        #seats-grid {
+            padding-left: 10px;
         }
 
         #reservation-panel {
@@ -58,7 +81,7 @@
                 <p:commandButton onclick="window.history.back();" value="Powrót do repertuaru" />
             </div>
             <div id="room-plan-and-reservation-panel-container">
-                <div id="room-plan">
+                <div id="room-plan-panel">
                     <h:form id="room-plan-form">
                         <h1 style="margin-bottom: 0px">#{reservationBean.screening.movieEntity.movieName}</h1>
                         <h2 style="margin-top: 0px">
@@ -70,9 +93,15 @@
                             </h:outputText>
                         </h2>
 
-                        <rich:dataGrid value="#{reservationBean.seatsList}" var="seat" columns="#{reservationBean.columns}" elements="#{reservationBean.size}">
-                            <p:selectBooleanButton disabled="false" onLabel="" offLabel="" style="width:40px;margin-right:10px;" />
-                        </rich:dataGrid>
+                        <div id="room-plan">
+                            <div id="screen">EKRAN</div>
+                            <div id="seats-grid">
+                                <rich:dataGrid value="#{reservationBean.seatsList}" var="seat" columns="#{reservationBean.columns}" elements="#{reservationBean.size}">
+                                    <p:selectBooleanButton disabled="false" onLabel="" offLabel="" style="width:40px;margin-right:10px;" />
+                                </rich:dataGrid>
+                            </div>
+                        </div>
+
                     </h:form>
                 </div>
                 <div id="reservation-panel">
