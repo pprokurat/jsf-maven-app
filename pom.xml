@@ -20,6 +20,7 @@
         <primefaces.version>7.0</primefaces.version>
         <primefaces.themes.version>1.0.10</primefaces.themes.version>
         <omnifaces.version>3.3</omnifaces.version>
+        <richfaces.version>4.3.7.Final</richfaces.version>
 
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
 
@@ -80,6 +81,12 @@
             <groupId>org.omnifaces</groupId>
             <artifactId>omnifaces</artifactId>
             <version>${omnifaces.version}</version>
+        </dependency>
+        <!-- RichFaces -->
+        <dependency>
+            <groupId>org.richfaces.ui</groupId>
+            <artifactId>richfaces-components-ui</artifactId>
+            <version>${richfaces.version}</version>
         </dependency>
         <!-- MySQL -->
         <dependency>

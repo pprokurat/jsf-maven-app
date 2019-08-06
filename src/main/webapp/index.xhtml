@@ -79,7 +79,7 @@
                     <p:dataTable id="screeningsTable" var="screening" value="#{screeningsBean.screeningsList}"
                                  scrollable="true" scrollHeight="215" emptyMessage="Brak seansów w wybranym dniu.">
                         <p:column headerText="Film" sortBy="#{screening.movieEntity.movieName}">
-                            <h:commandLink action="reservation.xhtml?faces-redirect=true">
+                            <h:commandLink action="#{reservationBean.chooseScreening(screening)}">
                                 <h:outputText value="#{screening.movieEntity.movieName}"/>
                             </h:commandLink>
                         </p:column>

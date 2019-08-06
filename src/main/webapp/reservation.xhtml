@@ -6,7 +6,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:o="http://omnifaces.org/ui">
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:rich="http://richfaces.org/rich">
 <h:head>
     <title>Kino - Rezerwuj</title>
 
@@ -59,20 +60,19 @@
             <div id="room-plan-and-reservation-panel-container">
                 <div id="room-plan">
                     <h:form id="room-plan-form">
-                        <h1>Plan sali</h1>
-                        <h:panelGrid columns="#{(reservationBean.columns)+1}" >
-                            <h:outputText value="1" style="margin-right:10px; font-weight:bold" />
-                            <p:selectBooleanButton id="value1" disabled="false" onLabel="" offLabel="" style="width:40px;" />
-                            <p:selectBooleanButton id="value2" disabled="false" onLabel="" offLabel="" style="width:40px;" />
-                            <p:selectBooleanButton id="value3" disabled="true" onLabel="" offLabel="" style="width:40px;" />
-                            <p:selectBooleanButton id="value4" disabled="true" onLabel="" offLabel="" style="width:40px;" />
-                            <p:selectBooleanButton id="value5" disabled="false" onLabel="" offLabel="" style="width:40px;" />
-                            <p:selectBooleanButton id="value6" disabled="false" onLabel="" offLabel="" style="width:40px;"  />
-                            <p:selectBooleanButton id="value7" disabled="false" onLabel="" offLabel="" style="width:40px;" />
-                            <p:selectBooleanButton id="value8" disabled="false" onLabel="" offLabel="" style="width:40px;" />
-                            <p:selectBooleanButton id="value9" disabled="false" onLabel="" offLabel="" style="width:40px;" />
-                            <p:selectBooleanButton id="value10" disabled="false" onLabel="" offLabel="" style="width:40px;" />
-                        </h:panelGrid>
+                        <h1 style="margin-bottom: 0px">#{reservationBean.screening.movieEntity.movieName}</h1>
+                        <h2 style="margin-top: 0px">
+                            <h:outputText value="#{reservationBean.screening.date}, ">
+                            </h:outputText>
+                            <h:outputText value="#{reservationBean.screening.time}">
+                                <o:converter converterId="javax.faces.DateTime" pattern="HH:mm"
+                                             timeZone="#{screeningsBean.timeZone}"/>
+                            </h:outputText>
+                        </h2>
+
+                        <rich:dataGrid value="#{reservationBean.seatsList}" var="seat" columns="#{reservationBean.columns}" elements="#{reservationBean.size}">
+                            <p:selectBooleanButton disabled="false" onLabel="" offLabel="" style="width:40px;margin-right:10px;" />
+                        </rich:dataGrid>
                     </h:form>
                 </div>
                 <div id="reservation-panel">
