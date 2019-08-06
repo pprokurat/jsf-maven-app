@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -118,6 +119,8 @@ public class ReservationBean implements Serializable {
 
         seatsList = query.getResultList();
 
+        Collections.sort(seatsList);
+
         session.close();
     }
     
@@ -132,6 +135,18 @@ public class ReservationBean implements Serializable {
 
         columns = uniqueSeatNumber.size();
         
+    }
+
+    public boolean isReserved(ScreeningSeatEntity seat) {
+
+        if(seat.getScreeningSeatStatus() == 'R' || seat.getScreeningSeatStatus() == 'S') {
+            return true;
+        }
+        else {
+            return false;
+        }
+
+
     }
 
     public void makeReservation() {

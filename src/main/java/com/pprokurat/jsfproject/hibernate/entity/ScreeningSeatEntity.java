@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "screening_seat", schema = "jsf-project-db")
-public class ScreeningSeatEntity {
+public class ScreeningSeatEntity implements Comparable<ScreeningSeatEntity> {
 
     @Id
     @Column(name = "screening_seat_id", nullable = false)
@@ -93,5 +93,14 @@ public class ScreeningSeatEntity {
     @Override
     public int hashCode() {
         return Objects.hash(screeningSeatId, screeningId, roomSeatId, screeningSeatStatus, reservationEntity);
+    }
+
+    @Override
+    public int compareTo(ScreeningSeatEntity o) {
+        int compare = Integer.compare(roomSeatId.getRowNumber(), o.roomSeatId.getRowNumber());
+        if(compare == 0) {
+            compare = Integer.compare(roomSeatId.getSeatNumber(), o.roomSeatId.getSeatNumber());
+        }
+        return compare;
     }
 }

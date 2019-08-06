@@ -97,7 +97,7 @@
                             <div id="screen">EKRAN</div>
                             <div id="seats-grid">
                                 <rich:dataGrid value="#{reservationBean.seatsList}" var="seat" columns="#{reservationBean.columns}" elements="#{reservationBean.size}">
-                                    <p:selectBooleanButton disabled="false" onLabel="" offLabel="" style="width:40px;margin-right:10px;" />
+                                    <p:selectBooleanButton disabled="#{reservationBean.isReserved(seat)}" onLabel="" offLabel="" style="width:40px;margin-right:10px;" />
                                 </rich:dataGrid>
                             </div>
                         </div>
