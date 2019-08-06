@@ -73,6 +73,19 @@
 <h:body>
     <div id="main-container">
         <div id="screenings-and-calendar-container">
+            <div id="calendar">
+                <h:form id="calendar-form">
+                    <h1>Wybierz datę</h1>
+                    <p:calendar id="inline" locale="pl" value="#{screeningsBean.datetime}" mode="inline"
+                                mindate="today">
+                        <p:ajax event="dateSelect" listener="#{screeningsBean.dateSelectedAction}"
+                                update=":screenings-list-form:screeningsTable :calendar-form:selectedDate"/>
+                    </p:calendar>
+                    <br/>
+                    <h:outputLabel><b>Wybrana data: </b></h:outputLabel>
+                    <h:outputText value="#{screeningsBean.date}" id="selectedDate"/>
+                </h:form>
+            </div>
             <div id="screenings-list">
                 <h:form id="screenings-list-form">
                     <h1>Repertuar</h1>
@@ -90,19 +103,6 @@
                             </h:outputText>
                         </p:column>
                     </p:dataTable>
-                </h:form>
-            </div>
-            <div id="calendar">
-                <h:form id="calendar-form">
-                    <h1>Wybierz datę</h1>
-                    <p:calendar id="inline" locale="pl" value="#{screeningsBean.datetime}" mode="inline"
-                                mindate="today">
-                        <p:ajax event="dateSelect" listener="#{screeningsBean.dateSelectedAction}"
-                                update=":calendar-form:selectedDate :screenings-list-form:screeningsTable"/>
-                    </p:calendar>
-                    <br/>
-                    <h:outputLabel><b>Wybrana data: </b></h:outputLabel>
-                    <h:outputText value="#{screeningsBean.date}" id="selectedDate"/>
                 </h:form>
             </div>
         </div>
