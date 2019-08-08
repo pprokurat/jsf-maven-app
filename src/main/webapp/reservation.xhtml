@@ -109,10 +109,10 @@
 
                                 <h:panelGroup id="test">
                                     <ui:repeat value="#{reservationBean.selectedSeatsList}" var="myVar">
-                                        <h:outputText value="miejsce nr: "/>
-                                        <h:outputText value="#{myVar.roomSeatId.seatNumber}, "/>
-                                        <h:outputText value="rząd: "/>
-                                        <h:outputText value="#{myVar.roomSeatId.rowNumber}"/><br/>
+                                        <h:outputText value="rząd "/>
+                                        <h:outputText value="#{myVar.roomSeatId.rowNumber}"/>
+                                        <h:outputText value=", miejsce nr "/>
+                                        <h:outputText value="#{myVar.roomSeatId.seatNumber}"/><br/>
                                     </ui:repeat>
                                 </h:panelGroup>
                             </div>

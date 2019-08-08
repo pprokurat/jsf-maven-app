@@ -210,6 +210,8 @@ public class ReservationBean implements Serializable {
             index++;
         }
 
+        Collections.sort(selectedSeatsList);
+
     }
 
     public boolean isReserved(Integer seatIndex) {
