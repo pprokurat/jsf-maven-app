@@ -78,7 +78,7 @@
     <div id="page-container">
         <div id="main-container">
             <div id="go-back-button">
-                <p:commandButton onclick="window.history.back();" value="Powrót do repertuaru" />
+                <p:commandButton onclick="window.history.back();" value="Powrót do repertuaru"/>
             </div>
             <div id="room-plan-and-reservation-panel-container">
                 <div id="room-plan-panel">
@@ -92,13 +92,23 @@
                                              timeZone="#{screeningsBean.timeZone}"/>
                             </h:outputText>
                         </h2>
-
                         <div id="room-plan">
                             <div id="screen">EKRAN</div>
                             <div id="seats-grid">
-                                <rich:dataGrid value="#{reservationBean.seatsList}" var="seat" columns="#{reservationBean.columns}" elements="#{reservationBean.size}">
-                                    <p:selectBooleanButton disabled="#{reservationBean.isReserved(seat)}" onLabel="" offLabel="" style="width:40px;margin-right:10px;" />
+                                <rich:dataGrid value="#{reservationBean.iterationList}" var="seat"
+                                               columns="#{reservationBean.columns}" elements="#{reservationBean.size}">
+                                    <p:selectBooleanButton
+                                            value="#{reservationBean.selectedSeatsList[seat]}"
+                                            disabled="#{reservationBean.isReserved(seat)}" onLabel="" offLabel=""
+                                            style="width:40px;margin-right:10px;">
+                                        <p:ajax update=":room-plan-form:test"/>
+                                    </p:selectBooleanButton>
                                 </rich:dataGrid>
+                                <h:panelGroup id="test">
+                                    <ui:repeat value="#{reservationBean.selectedSeatsList}" var="myVar">
+                                        <h:outputText value="#{myVar}, "/>
+                                    </ui:repeat>
+                                </h:panelGroup>
                             </div>
                         </div>
 
@@ -107,18 +117,21 @@
                 <div id="reservation-panel">
                     <h:form id="reservation-panel-form">
                         <h1>Rezerwuj</h1>
-                        <b><h:outputLabel for="inputEmail" value="Podaj adres e-mail:" /></b>
-                        <p:inputText id="inputEmail" style="margin-bottom: 10px;" value="#{reservationBean.email}" required="true"
+                        <b><h:outputLabel for="inputEmail" value="Podaj adres e-mail:"/></b>
+                        <p:inputText id="inputEmail" style="margin-bottom: 10px;" value="#{reservationBean.email}"
+                                     required="true"
                                      requiredMessage="Adres e-mail jest wymagany."
                                      validatorMessage="Niepoprawny adres e-mail.">
-                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                            <f:validateRegex
+                                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
                         </p:inputText>
-                        <p:watermark for="inputEmail" value="E-mail" />
-                        <p:message for="inputEmail" />
-                        <p:commandButton value="Zarezerwuj" style="margin-top: 10px; margin-right: 10px;" action="#{reservationBean.makeReservation}"
-                            process="@form" update="@form" />
+                        <p:watermark for="inputEmail" value="E-mail"/>
+                        <p:message for="inputEmail"/>
+                        <p:commandButton value="Zarezerwuj" style="margin-top: 10px; margin-right: 10px;"
+                                         action="#{reservationBean.makeReservation}"
+                                         process="@form" update="@form"/>
                         <p:commandButton value="Kup" style="margin-top: 10px;" action="#{reservationBean.buyTickets}"
-                                         process="@form" update="@form" />
+                                         process="@form" update="@form"/>
                     </h:form>
                 </div>
             </div>

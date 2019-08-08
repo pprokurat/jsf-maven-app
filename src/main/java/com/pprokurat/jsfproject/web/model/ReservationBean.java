@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -30,6 +31,8 @@ public class ReservationBean implements Serializable {
     private Locale locale = new Locale("pl", "pl");
     private Date date;
     private List<ScreeningSeatEntity> seatsList;
+    private List<Boolean> selectedSeatsList;
+    private List<Integer> iterationList = new ArrayList<>();
 
 
     public String getEmail() {
@@ -88,6 +91,14 @@ public class ReservationBean implements Serializable {
         this.seatsList = seatsList;
     }
 
+    public List<Boolean> getSelectedSeatsList() { return selectedSeatsList; }
+
+    public void setSelectedSeatsList(List<Boolean> selectedSeatsList) { this.selectedSeatsList = selectedSeatsList; }
+
+    public List<Integer> getIterationList() { return iterationList; }
+
+    public void setIterationList(List<Integer> iterationList) { this.iterationList = iterationList; }
+
 
     public String chooseScreening(ScreeningEntity screening) {
         this.screening = screening;
@@ -99,6 +110,9 @@ public class ReservationBean implements Serializable {
         countColumns();
 
         size = seatsList.size();
+
+        selectedSeatsList = new ArrayList<>();
+        populateSelectedSeatsList();
 
         return "reservation.xhtml?faces-redirect=true";
     }
@@ -137,16 +151,31 @@ public class ReservationBean implements Serializable {
         
     }
 
-    public boolean isReserved(ScreeningSeatEntity seat) {
+    private void populateSelectedSeatsList() {
 
-        if(seat.getScreeningSeatStatus() == 'R' || seat.getScreeningSeatStatus() == 'S') {
+        for (ScreeningSeatEntity seat : seatsList
+        ) {
+            selectedSeatsList.add(false);
+        }
+
+        Integer iterator = 0;
+
+        for (ScreeningSeatEntity seat : seatsList
+        ) {
+            iterationList.add(iterator);
+            iterator++;
+        }
+
+    }
+
+    public boolean isReserved(Integer seatIndex) {
+
+        if(seatsList.get(seatIndex).getScreeningSeatStatus() == 'R' || seatsList.get(seatIndex).getScreeningSeatStatus() == 'S') {
             return true;
         }
         else {
             return false;
         }
-
-
     }
 
     public void makeReservation() {
