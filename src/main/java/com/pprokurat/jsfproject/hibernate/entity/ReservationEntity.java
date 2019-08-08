@@ -12,6 +12,8 @@ import java.util.Objects;
 public class ReservationEntity {
     private int reservationId;
     private String email;
+    private String name;
+    private String phoneNumber;
 
     @Id
     @Column(name = "reservation_id", nullable = false)
@@ -33,6 +35,26 @@ public class ReservationEntity {
         this.email = email;
     }
 
+    @Basic
+    @Column(name = "name", nullable = true, length = 100)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Basic
+    @Column(name = "phone_number", nullable = true, length = 100)
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,4 +68,6 @@ public class ReservationEntity {
     public int hashCode() {
         return Objects.hash(reservationId, email);
     }
+
+
 }

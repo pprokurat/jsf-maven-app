@@ -91,6 +91,8 @@
                                 <o:converter converterId="javax.faces.DateTime" pattern="HH:mm"
                                              timeZone="#{screeningsBean.timeZone}"/>
                             </h:outputText>
+                            <h:outputText value=", #{reservationBean.screening.roomEntity.description}">
+                            </h:outputText>
                         </h2>
                         <div id="room-plan">
                             <div id="screen">EKRAN</div>
@@ -98,15 +100,19 @@
                                 <rich:dataGrid value="#{reservationBean.iterationList}" var="seat"
                                                columns="#{reservationBean.columns}" elements="#{reservationBean.size}">
                                     <p:selectBooleanButton
-                                            value="#{reservationBean.selectedSeatsList[seat]}"
+                                            value="#{reservationBean.checkedSeatsList[seat]}"
                                             disabled="#{reservationBean.isReserved(seat)}" onLabel="" offLabel=""
                                             style="width:40px;margin-right:10px;">
-                                        <p:ajax update=":room-plan-form:test"/>
+                                        <p:ajax update=":room-plan-form:test" listener="#{reservationBean.updateSelectedSeatsList}"/>
                                     </p:selectBooleanButton>
                                 </rich:dataGrid>
+
                                 <h:panelGroup id="test">
                                     <ui:repeat value="#{reservationBean.selectedSeatsList}" var="myVar">
-                                        <h:outputText value="#{myVar}, "/>
+                                        <h:outputText value="miejsce nr: "/>
+                                        <h:outputText value="#{myVar.roomSeatId.seatNumber}, "/>
+                                        <h:outputText value="rząd: "/>
+                                        <h:outputText value="#{myVar.roomSeatId.rowNumber}"/><br/>
                                     </ui:repeat>
                                 </h:panelGroup>
                             </div>
@@ -117,21 +123,43 @@
                 <div id="reservation-panel">
                     <h:form id="reservation-panel-form">
                         <h1>Rezerwuj</h1>
-                        <b><h:outputLabel for="inputEmail" value="Podaj adres e-mail:"/></b>
-                        <p:inputText id="inputEmail" style="margin-bottom: 10px;" value="#{reservationBean.email}"
-                                     required="true"
-                                     requiredMessage="Adres e-mail jest wymagany."
-                                     validatorMessage="Niepoprawny adres e-mail.">
-                            <f:validateRegex
-                                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
-                        </p:inputText>
-                        <p:watermark for="inputEmail" value="E-mail"/>
-                        <p:message for="inputEmail"/>
-                        <p:commandButton value="Zarezerwuj" style="margin-top: 10px; margin-right: 10px;"
-                                         action="#{reservationBean.makeReservation}"
-                                         process="@form" update="@form"/>
-                        <p:commandButton value="Kup" style="margin-top: 10px;" action="#{reservationBean.buyTickets}"
-                                         process="@form" update="@form"/>
+
+                        <h:panelGroup>
+                            <b><h:outputLabel for="inputName" value="Imię i nazwisko:"/></b><br/>
+                            <p:inputText id="inputName" style="margin-bottom: 10px;" value="#{reservationBean.name}"
+                                         required="false">
+                            </p:inputText>
+                            <p:watermark for="inputName" value="Imię i nazwisko"/>
+                        </h:panelGroup><br/>
+
+                        <h:panelGroup>
+                            <b><h:outputLabel for="inputEmail" value="Adres e-mail: *"/></b><br/>
+                            <p:inputText id="inputEmail" style="margin-bottom: 10px;" value="#{reservationBean.email}"
+                                         required="true"
+                                         requiredMessage="Adres e-mail jest wymagany."
+                                         validatorMessage="Niepoprawny adres e-mail.">
+                                <f:validateRegex
+                                        pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                            </p:inputText>
+                            <p:watermark for="inputEmail" value="E-mail"/>
+                            <p:message for="inputEmail"/>
+                        </h:panelGroup>
+
+
+                        <h:panelGroup>
+                            <b><h:outputLabel for="inputPhoneNumber" value="Numer telefonu:"/></b><br/>
+                            <p:inputText id="inputPhoneNumber" style="margin-bottom: 10px;" value="#{reservationBean.phoneNumber}"
+                                         required="false">
+                            </p:inputText>
+                            <p:watermark for="inputPhoneNumber" value="Numer telefonu"/>
+
+                            <p:commandButton value="Zarezerwuj" style="margin-top: 10px; margin-right: 10px;"
+                                             action="#{reservationBean.makeReservation}"
+                                             process="@form" update="@form"/>
+                            <p:commandButton value="Kup" style="margin-top: 10px;" action="#{reservationBean.buyTickets}"
+                                             process="@form" update="@form"/>
+                        </h:panelGroup><br/>
+
                     </h:form>
                 </div>
             </div>
