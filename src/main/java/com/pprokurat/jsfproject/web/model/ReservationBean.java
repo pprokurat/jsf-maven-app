@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -37,6 +38,9 @@ public class ReservationBean implements Serializable {
     private List<Boolean> checkedSeatsList = new ArrayList<>();
     private List<Integer> iterationList = new ArrayList<>();
     private HashSet<Integer> uniqueRowNumber = new HashSet<Integer>();
+    private int reducedTicketsNumber = 0;
+    private List<Integer> reducedTickets = new ArrayList<>();
+    private int price = 0;
 
 
     public String getEmail() {
@@ -111,6 +115,18 @@ public class ReservationBean implements Serializable {
 
     public void setUniqueRowNumber(HashSet<Integer> uniqueRowNumber) { this.uniqueRowNumber = uniqueRowNumber; }
 
+    public Integer getReducedTicketsNumber() { return reducedTicketsNumber; }
+
+    public void setReducedTicketsNumber(Integer reducedTicketsNumber) { this.reducedTicketsNumber = reducedTicketsNumber; }
+
+    public List<Integer> getReducedTickets() { return reducedTickets; }
+
+    public void setReducedTickets(List<Integer> reducedTickets) { this.reducedTickets = reducedTickets; }
+
+    public int getPrice() { return price; }
+
+    public void setPrice(int price) { this.price = price; }
+
 
     public String chooseScreening(ScreeningEntity screening) {
         this.screening = screening;
@@ -129,6 +145,9 @@ public class ReservationBean implements Serializable {
         selectedSeatsList = new ArrayList<>();
         iterationList = new ArrayList<>();
         populateCheckedSeatsList();
+
+        reducedTicketsNumber = 0;
+        price = 0;
 
         return "reservation.xhtml?faces-redirect=true";
     }
@@ -211,6 +230,37 @@ public class ReservationBean implements Serializable {
         }
 
         Collections.sort(selectedSeatsList);
+        updateReducedList();
+
+        calculatePrice();
+
+    }
+
+    private void updateReducedList() {
+
+        reducedTickets = new ArrayList<>();
+
+        int index = 1;
+        for(ScreeningSeatEntity seat : selectedSeatsList
+        ) {
+            reducedTickets.add(index);
+            index++;
+        }
+
+    }
+
+    public void calculatePrice() {
+
+        price = 0;
+
+        //add price of reduced fare tickets
+        //price_tmp.add(screening.getPriceReduced().multiply(new BigDecimal(reducedTicketsNumber)));
+        price += screening.getPriceReduced() * reducedTicketsNumber;
+
+        //add price of regular fare tickets
+        //Integer regularTicketsNumber = selectedSeatsList.size() - reducedTicketsNumber;
+        //price_tmp.add(screening.getPriceRegular().multiply(new BigDecimal(regularTicketsNumber)));
+        price += screening.getPriceRegular() * (selectedSeatsList.size() - reducedTicketsNumber);
 
     }
 

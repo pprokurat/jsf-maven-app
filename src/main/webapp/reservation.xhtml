@@ -103,18 +103,11 @@
                                             value="#{reservationBean.checkedSeatsList[seat]}"
                                             disabled="#{reservationBean.isReserved(seat)}" onLabel="" offLabel=""
                                             style="width:40px;margin-right:10px;">
-                                        <p:ajax update=":room-plan-form:test" listener="#{reservationBean.updateSelectedSeatsList}"/>
+                                        <p:ajax update=":reservation-panel-form:reduced-tickets :reservation-panel-form:price :reservation-panel-form:selected-seats" listener="#{reservationBean.updateSelectedSeatsList}"/>
                                     </p:selectBooleanButton>
                                 </rich:dataGrid>
 
-                                <h:panelGroup id="test">
-                                    <ui:repeat value="#{reservationBean.selectedSeatsList}" var="myVar">
-                                        <h:outputText value="rząd "/>
-                                        <h:outputText value="#{myVar.roomSeatId.rowNumber}"/>
-                                        <h:outputText value=", miejsce nr "/>
-                                        <h:outputText value="#{myVar.roomSeatId.seatNumber}"/><br/>
-                                    </ui:repeat>
-                                </h:panelGroup>
+
                             </div>
                         </div>
 
@@ -145,20 +138,50 @@
                             <p:message for="inputEmail"/>
                         </h:panelGroup>
 
-
                         <h:panelGroup>
                             <b><h:outputLabel for="inputPhoneNumber" value="Numer telefonu:"/></b><br/>
                             <p:inputText id="inputPhoneNumber" style="margin-bottom: 10px;" value="#{reservationBean.phoneNumber}"
                                          required="false">
                             </p:inputText>
                             <p:watermark for="inputPhoneNumber" value="Numer telefonu"/>
+                        </h:panelGroup>
 
+                        <br/><br/>
+                        <h:panelGroup id="reduced-tickets">
+                            <b><h:outputLabel for="reduced" value="Ilość biletów ulgowych:" /></b><br/>
+                            <p:selectOneMenu id="reduced" value="#{reservationBean.reducedTicketsNumber}">
+                                <f:selectItem itemLabel="Wybierz" itemValue="0" />
+                                <f:selectItems value="#{reservationBean.reducedTickets}" />
+                                <p:ajax update=":reservation-panel-form:price" listener="#{reservationBean.calculatePrice}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+
+                        <br/><br/>
+                        <h:panelGroup id="price">
+                            <b><h:outputText value="suma: "/>
+                            <h:outputText style="font-size: x-large;" value="#{reservationBean.price}"/>
+                                <h:outputText style="font-size: large;" value="zł"/></b>
+                        </h:panelGroup>
+
+                        <br/>
+                        <h:panelGroup>
                             <p:commandButton value="Zarezerwuj" style="margin-top: 10px; margin-right: 10px;"
                                              action="#{reservationBean.makeReservation}"
                                              process="@form" update="@form"/>
                             <p:commandButton value="Kup" style="margin-top: 10px;" action="#{reservationBean.buyTickets}"
                                              process="@form" update="@form"/>
-                        </h:panelGroup><br/>
+                        </h:panelGroup>
+
+                        <br/><br/>
+                        <h:panelGroup id="selected-seats">
+                            <b><h:outputLabel value="Wybrane miejsca:" /></b><br/>
+                            <ui:repeat value="#{reservationBean.selectedSeatsList}" var="myVar">
+                                <h:outputText value="rząd "/>
+                                <h:outputText value="#{myVar.roomSeatId.rowNumber}"/>
+                                <h:outputText value=", miejsce nr "/>
+                                <h:outputText value="#{myVar.roomSeatId.seatNumber}"/><br/>
+                            </ui:repeat>
+                        </h:panelGroup>
 
                     </h:form>
                 </div>

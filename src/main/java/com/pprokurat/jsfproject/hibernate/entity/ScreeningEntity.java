@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.Objects;
@@ -35,6 +36,14 @@ public class ScreeningEntity {
     @Column(name = "time", nullable = false)
     private Time time;
 
+    @Basic
+    @Column(name = "price_regular")
+    private int priceRegular;
+
+    @Basic
+    @Column(name = "price_reduced")
+    private int priceReduced;
+
 
     public int getScreeningId() {
         return screeningId;
@@ -44,26 +53,29 @@ public class ScreeningEntity {
         this.screeningId = screeningId;
     }
 
-
     public MovieEntity getMovieEntity() { return movieEntity; }
 
     public void setMovieEntity(MovieEntity movieEntity) { this.movieEntity = movieEntity; }
-
 
     public RoomEntity getRoomEntity() { return roomEntity; }
 
     public void setRoomEntity(RoomEntity roomEntity) { this.roomEntity = roomEntity; }
 
-
     public Date getDate() { return date; }
 
     public void setDate(Date date) { this.date = date; }
-
 
     public Time getTime() { return time; }
 
     public void setTime(Time time) { this.time = time; }
 
+    public int getPriceRegular() { return priceRegular; }
+
+    public void setPriceRegular(int priceRegular) { this.priceRegular = priceRegular; }
+
+    public int getPriceReduced() { return priceReduced; }
+
+    public void setPriceReduced(int priceReduced) { this.priceReduced = priceReduced; }
 
     @Override
     public boolean equals(Object o) {
@@ -74,11 +86,18 @@ public class ScreeningEntity {
                 Objects.equals(movieEntity, that.movieEntity) &&
                 Objects.equals(roomEntity, that.roomEntity) &&
                 Objects.equals(date, that.date) &&
-                Objects.equals(time, that.time);
+                Objects.equals(time, that.time) &&
+                Objects.equals(priceRegular, that.priceRegular) &&
+                Objects.equals(priceReduced, that.priceReduced);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(screeningId, movieEntity, roomEntity, date, time);
+        return Objects.hash(screeningId, movieEntity, roomEntity, date, time, priceRegular, priceReduced);
     }
+
+
+
+
+
 }
