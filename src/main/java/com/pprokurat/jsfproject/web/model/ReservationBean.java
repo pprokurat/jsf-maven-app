@@ -1,8 +1,8 @@
 package com.pprokurat.jsfproject.web.model;
 
+import com.pprokurat.jsfproject.hibernate.entity.ReservationEntity;
 import com.pprokurat.jsfproject.hibernate.entity.ScreeningEntity;
 import com.pprokurat.jsfproject.hibernate.entity.ScreeningSeatEntity;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -14,7 +14,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -115,9 +114,9 @@ public class ReservationBean implements Serializable {
 
     public void setUniqueRowNumber(HashSet<Integer> uniqueRowNumber) { this.uniqueRowNumber = uniqueRowNumber; }
 
-    public Integer getReducedTicketsNumber() { return reducedTicketsNumber; }
+    public int getReducedTicketsNumber() { return reducedTicketsNumber; }
 
-    public void setReducedTicketsNumber(Integer reducedTicketsNumber) { this.reducedTicketsNumber = reducedTicketsNumber; }
+    public void setReducedTicketsNumber(int reducedTicketsNumber) { this.reducedTicketsNumber = reducedTicketsNumber; }
 
     public List<Integer> getReducedTickets() { return reducedTickets; }
 
@@ -144,8 +143,12 @@ public class ReservationBean implements Serializable {
         checkedSeatsList = new ArrayList<>();
         selectedSeatsList = new ArrayList<>();
         iterationList = new ArrayList<>();
+        reducedTickets = new ArrayList<>();
         populateCheckedSeatsList();
 
+        name = null;
+        email = null;
+        phoneNumber = null;
         reducedTicketsNumber = 0;
         price = 0;
 
@@ -240,6 +243,11 @@ public class ReservationBean implements Serializable {
 
         reducedTickets = new ArrayList<>();
 
+        if (reducedTicketsNumber > selectedSeatsList.size())
+        {
+            reducedTicketsNumber = selectedSeatsList.size();
+        }
+
         int index = 1;
         for(ScreeningSeatEntity seat : selectedSeatsList
         ) {
@@ -254,12 +262,9 @@ public class ReservationBean implements Serializable {
         price = 0;
 
         //add price of reduced fare tickets
-        //price_tmp.add(screening.getPriceReduced().multiply(new BigDecimal(reducedTicketsNumber)));
         price += screening.getPriceReduced() * reducedTicketsNumber;
 
         //add price of regular fare tickets
-        //Integer regularTicketsNumber = selectedSeatsList.size() - reducedTicketsNumber;
-        //price_tmp.add(screening.getPriceRegular().multiply(new BigDecimal(regularTicketsNumber)));
         price += screening.getPriceRegular() * (selectedSeatsList.size() - reducedTicketsNumber);
 
     }
@@ -276,9 +281,52 @@ public class ReservationBean implements Serializable {
 
     public void makeReservation() {
 
+
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        session.beginTransaction();
+
+        ReservationEntity reservation = new ReservationEntity();
+        reservation.setEmail(email);
+        if(!name.isEmpty()){ reservation.setName(name); }
+        if(!phoneNumber.isEmpty()){ reservation.setPhoneNumber(phoneNumber); }
+        session.save(reservation);
+
+
+        for(ScreeningSeatEntity seat : selectedSeatsList){
+            seat.setScreeningSeatStatus('R');
+            seat.setReservationEntity(reservation);
+            session.update(seat);
+        }
+
+        session.getTransaction().commit();
+        session.close();
+
     }
 
     public void buyTickets() {
+
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        session.beginTransaction();
+
+        ReservationEntity reservation = new ReservationEntity();
+        reservation.setEmail(email);
+        if(!name.isEmpty()){ reservation.setName(name); }
+        if(!phoneNumber.isEmpty()){ reservation.setPhoneNumber(phoneNumber); }
+        session.save(reservation);
+
+
+        for(ScreeningSeatEntity seat : selectedSeatsList){
+            seat.setScreeningSeatStatus('S');
+            seat.setReservationEntity(reservation);
+            session.update(seat);
+        }
+
+        session.getTransaction().commit();
+        session.close();
 
     }
 }

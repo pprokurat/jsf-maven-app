@@ -3,6 +3,8 @@ package com.pprokurat.jsfproject.hibernate.entity;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Objects;
@@ -15,7 +17,7 @@ public class ReservationEntity {
     private String name;
     private String phoneNumber;
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id", nullable = false)
     public int getReservationId() {
         return reservationId;
