@@ -16,6 +16,9 @@ public class ReservationEntity {
     private String email;
     private String name;
     private String phoneNumber;
+    private int regularTicketsNumber;
+    private int reducedTicketsNumber;
+    private int price;
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id", nullable = false)
@@ -57,6 +60,36 @@ public class ReservationEntity {
         this.phoneNumber = phoneNumber;
     }
 
+    @Basic
+    @Column(name = "regular_tickets_number", nullable = false)
+    public int getRegularTicketsNumber() {
+        return regularTicketsNumber;
+    }
+
+    public void setRegularTicketsNumber(int regularTicketsNumber) {
+        this.regularTicketsNumber = regularTicketsNumber;
+    }
+
+    @Basic
+    @Column(name = "reduced_tickets_number", nullable = false)
+    public int getReducedTicketsNumber() {
+        return reducedTicketsNumber;
+    }
+
+    public void setReducedTicketsNumber(int reducedTicketsNumber) {
+        this.reducedTicketsNumber = reducedTicketsNumber;
+    }
+
+    @Basic
+    @Column(name = "price", nullable = false)
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,6 +103,5 @@ public class ReservationEntity {
     public int hashCode() {
         return Objects.hash(reservationId, email);
     }
-
 
 }

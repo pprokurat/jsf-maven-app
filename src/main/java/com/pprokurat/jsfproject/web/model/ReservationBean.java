@@ -291,6 +291,9 @@ public class ReservationBean implements Serializable {
         reservation.setEmail(email);
         if(!name.isEmpty()){ reservation.setName(name); }
         if(!phoneNumber.isEmpty()){ reservation.setPhoneNumber(phoneNumber); }
+        reservation.setReducedTicketsNumber(reducedTicketsNumber);
+        reservation.setRegularTicketsNumber(selectedSeatsList.size() - reducedTicketsNumber);
+        reservation.setPrice(price);
         session.save(reservation);
 
 
@@ -316,6 +319,9 @@ public class ReservationBean implements Serializable {
         reservation.setEmail(email);
         if(!name.isEmpty()){ reservation.setName(name); }
         if(!phoneNumber.isEmpty()){ reservation.setPhoneNumber(phoneNumber); }
+        reservation.setReducedTicketsNumber(reducedTicketsNumber);
+        reservation.setRegularTicketsNumber(selectedSeatsList.size() - reducedTicketsNumber);
+        reservation.setPrice(price);
         session.save(reservation);
 
 
@@ -329,4 +335,5 @@ public class ReservationBean implements Serializable {
         session.close();
 
     }
+
 }

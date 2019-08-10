@@ -90,17 +90,23 @@
                 <h:form id="screenings-list-form">
                     <h1>Repertuar</h1>
                     <p:dataTable id="screeningsTable" var="screening" value="#{screeningsBean.screeningsList}"
-                                 scrollable="true" scrollHeight="215" emptyMessage="Brak seansów w wybranym dniu.">
+                                 scrollable="true" scrollHeight="230" emptyMessage="Brak seansów w wybranym dniu.">
                         <p:column headerText="Film" sortBy="#{screening.movieEntity.movieName}">
                             <h:commandLink action="#{reservationBean.chooseScreening(screening)}">
                                 <h:outputText value="#{screening.movieEntity.movieName}"/>
                             </h:commandLink>
                         </p:column>
-                        <p:column headerText="Godzina seansu" style="width: 30%" sortBy="#{screening.time}">
-                            <h:outputText value="#{screening.time}">
+                        <p:column headerText="Godzina seansu" style="width: 17%" sortBy="#{screening.time}">
+                            <h:outputText value="#{screening.time}" style="float: right">
                                 <o:converter converterId="javax.faces.DateTime" pattern="HH:mm"
                                              timeZone="#{screeningsBean.timeZone}"/>
                             </h:outputText>
+                        </p:column>
+                        <p:column headerText="Cena normalna" style="width: 16%" >
+                            <h:outputText value="#{screening.priceRegular}zł" style="float: right"/>
+                        </p:column>
+                        <p:column headerText="Cena ulgowa" style="width: 16%">
+                            <h:outputText value="#{screening.priceReduced}zł" style="float: right"/>
                         </p:column>
                     </p:dataTable>
                 </h:form>
