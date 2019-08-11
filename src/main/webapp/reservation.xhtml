@@ -166,10 +166,10 @@
                         <br/>
                         <h:panelGroup>
                             <p:commandButton value="Zarezerwuj" style="margin-top: 10px; margin-right: 10px;"
-                                             action="#{reservationBean.makeReservation}"
+                                             action="#{reservationBean.confirmReservation}"
                                              process="@form" update="@form"/>
                             <p:commandButton value="Kup" style="margin-top: 10px;"
-                                             action="#{reservationBean.buyTickets}"
+                                             action="#{reservationBean.confirmPurchase}"
                                              process="@form" update="@form"/>
                         </h:panelGroup>
 

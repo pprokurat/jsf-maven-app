@@ -38,6 +38,7 @@ public class ReservationBean implements Serializable {
     private List<Integer> iterationList = new ArrayList<>();
     private HashSet<Integer> uniqueRowNumber = new HashSet<Integer>();
     private int reducedTicketsNumber = 0;
+    private int regularTicketsNumber = 0;
     private List<Integer> reducedTickets = new ArrayList<>();
     private int price = 0;
 
@@ -118,6 +119,10 @@ public class ReservationBean implements Serializable {
 
     public void setReducedTicketsNumber(int reducedTicketsNumber) { this.reducedTicketsNumber = reducedTicketsNumber; }
 
+    public int getRegularTicketsNumber() { return regularTicketsNumber; }
+
+    public void setRegularTicketsNumber(int regularTicketsNumber) { this.regularTicketsNumber = regularTicketsNumber; }
+
     public List<Integer> getReducedTickets() { return reducedTickets; }
 
     public void setReducedTickets(List<Integer> reducedTickets) { this.reducedTickets = reducedTickets; }
@@ -150,9 +155,18 @@ public class ReservationBean implements Serializable {
         email = null;
         phoneNumber = null;
         reducedTicketsNumber = 0;
+        regularTicketsNumber = 0;
         price = 0;
 
         return "reservation.xhtml?faces-redirect=true";
+    }
+
+    public String confirmReservation(){
+        return "confirm-reservation.xhtml?faces-redirect=true";
+    }
+
+    public String confirmPurchase(){
+        return "confirm-purchase.xhtml?faces-redirect=true";
     }
 
     private void loadSeats() {
@@ -260,12 +274,13 @@ public class ReservationBean implements Serializable {
     public void calculatePrice() {
 
         price = 0;
+        regularTicketsNumber = selectedSeatsList.size() - reducedTicketsNumber;
 
         //add price of reduced fare tickets
         price += screening.getPriceReduced() * reducedTicketsNumber;
 
         //add price of regular fare tickets
-        price += screening.getPriceRegular() * (selectedSeatsList.size() - reducedTicketsNumber);
+        price += screening.getPriceRegular() * regularTicketsNumber;
 
     }
 
@@ -292,7 +307,7 @@ public class ReservationBean implements Serializable {
         if(!name.isEmpty()){ reservation.setName(name); }
         if(!phoneNumber.isEmpty()){ reservation.setPhoneNumber(phoneNumber); }
         reservation.setReducedTicketsNumber(reducedTicketsNumber);
-        reservation.setRegularTicketsNumber(selectedSeatsList.size() - reducedTicketsNumber);
+        reservation.setRegularTicketsNumber(regularTicketsNumber);
         reservation.setPrice(price);
         session.save(reservation);
 
@@ -320,7 +335,7 @@ public class ReservationBean implements Serializable {
         if(!name.isEmpty()){ reservation.setName(name); }
         if(!phoneNumber.isEmpty()){ reservation.setPhoneNumber(phoneNumber); }
         reservation.setReducedTicketsNumber(reducedTicketsNumber);
-        reservation.setRegularTicketsNumber(selectedSeatsList.size() - reducedTicketsNumber);
+        reservation.setRegularTicketsNumber(regularTicketsNumber);
         reservation.setPrice(price);
         session.save(reservation);
 

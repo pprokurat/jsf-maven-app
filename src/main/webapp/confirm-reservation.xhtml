@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:rich="http://richfaces.org/rich">
+<h:head>
+    <title>Kino - Potwierdź rezerwację</title>
+
+    <style type="text/css">
+        body {
+            background-color: #575757;
+        }
+
+        #page-container {
+            background-color: white;
+            max-width: 1024px;
+            height: 94vh;
+            margin: 3vh auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #details-container {
+            margin-left:40px;
+            margin-bottom:15px;
+        }
+
+        #confirm-container {
+            margin-left: 40px;
+            margin-top:0;
+        }
+
+    </style>
+</h:head>
+<h:body>
+    <div id="page-container">
+        <div id="main-container">
+            <h1 style="margin-left:40px">Potwierdź rezerwację</h1>
+            <div id="details-container">
+                <b><h:outputText value="#{reservationBean.screening.movieEntity.movieName}" style="font-size:x-large"/></b>
+                <br/>
+                <b><h:outputText value="#{reservationBean.screening.date}, " style="font-size: large;"/></b>
+                <b><h:outputText value="#{reservationBean.screening.time}" style="font-size: large;">
+                    <o:converter converterId="javax.faces.DateTime" pattern="HH:mm"
+                                 timeZone="#{screeningsBean.timeZone}"/>
+                </h:outputText><h:outputText value=", #{reservationBean.screening.roomEntity.description}" style="font-size: large;"/></b>
+                <br/><br/>
+                <h:panelGroup id="selected-seats">
+                    <b><h:outputLabel value="Wybrane miejsca:" /></b>
+                    <br/>
+                    <ui:repeat value="#{reservationBean.selectedSeatsList}" var="myVar">
+                        <h:outputText value="rząd "/>
+                        <h:outputText value="#{myVar.roomSeatId.rowNumber}"/>
+                        <h:outputText value=", miejsce nr "/>
+                        <h:outputText value="#{myVar.roomSeatId.seatNumber}"/>
+                        <br/>
+                    </ui:repeat>
+                </h:panelGroup>
+                <br/>
+                <b><h:outputLabel value="Ilość biletów normalnych: "/></b>
+                <h:outputText value="#{reservationBean.regularTicketsNumber}" />
+                <br/>
+                <b><h:outputLabel value="Ilość biletów ulgowych: "/></b>
+                <h:outputText value="#{reservationBean.reducedTicketsNumber}" />
+                <br/>
+                <b><h:outputText value="Suma: "/>
+                    <h:outputText style="font-size: x-large;" value="#{reservationBean.price}"/>
+                    <h:outputText style="font-size: large;" value="zł"/></b>
+
+            </div>
+            <div id="confirm-container">
+                <h:form>
+                    <h:panelGroup>
+                        <p:commandButton value="Zarezerwuj"
+                                         action="#{reservationBean.makeReservation}"
+                                         process="@form" update="@form"/>
+                        <p:commandButton onclick="window.history.back();" value="Anuluj" style="margin-left: 10px;"/>
+                    </h:panelGroup>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</h:body>
+</html>
