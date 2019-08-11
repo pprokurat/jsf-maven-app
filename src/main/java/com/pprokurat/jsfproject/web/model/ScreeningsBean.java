@@ -63,6 +63,10 @@ public class ScreeningsBean implements Serializable {
         loadScreenings();
     }
 
+    public String goToIndex(){
+        return "index.xhtml?faces-redirect=true";
+    }
+
     /**
      * @return the screeningsList
      */

@@ -72,13 +72,31 @@
             padding-right: 20px;
         }
 
+        @media only screen and (max-width: 1000px) {
+            #page-container {
+                height: 1200px;
+            }
+
+            #room-plan-and-reservation-panel-container {
+                display: block;
+            }
+
+            #room-plan-panel {
+                width: 100%;
+            }
+
+            #reservation-panel {
+                margin-left:25px;
+            }
+        }
+
     </style>
 </h:head>
 <h:body>
     <div id="page-container">
         <div id="main-container">
             <div id="go-back-button">
-                <p:commandButton onclick="window.history.back();" value="Powrót do repertuaru"/>
+                <p:commandButton action="#{screeningsBean.goToIndex}" value="Powrót do repertuaru"/>
             </div>
             <div id="room-plan-and-reservation-panel-container">
                 <div id="room-plan-panel">
@@ -160,7 +178,7 @@
                         <h:panelGroup id="price">
                             <b><h:outputText value="Suma: "/>
                             <h:outputText style="font-size: x-large;" value="#{reservationBean.price}"/>
-                                <h:outputText style="font-size: large;" value="zł"/></b>
+                                <h:outputText style="font-size: large;" value=" zł"/></b>
                         </h:panelGroup>
 
                         <br/>

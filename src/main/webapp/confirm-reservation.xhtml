@@ -79,15 +79,20 @@
                 <br/>
                 <b><h:outputText value="Suma: "/>
                     <h:outputText style="font-size: x-large;" value="#{reservationBean.price}"/>
-                    <h:outputText style="font-size: large;" value="zł"/></b>
+                    <h:outputText style="font-size: large;" value=" zł"/></b>
 
             </div>
             <div id="confirm-container">
                 <h:form>
+                    <p:dialog widgetVar="dlg" modal="true" resizable="false" draggable="false" closable="false" style="text-align: center">
+                        <h:outputText value="Miejsca zostały zarezerwowane."/>
+                        <br/><br/>
+                        <p:commandButton value="OK" action="#{screeningsBean.goToIndex}"/>
+                    </p:dialog>
                     <h:panelGroup>
                         <p:commandButton value="Zarezerwuj"
                                          action="#{reservationBean.makeReservation}"
-                                         process="@form" update="@form"/>
+                                         onclick="PF('dlg').show();"/>
                         <p:commandButton onclick="window.history.back();" value="Anuluj" style="margin-left: 10px;"/>
                     </h:panelGroup>
                 </h:form>
