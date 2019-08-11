@@ -62,6 +62,15 @@
                     </ui:repeat>
                 </h:panelGroup>
                 <br/>
+                <b><h:outputLabel value="Imię i nazwisko: "/></b>
+                <h:outputText value="#{reservationBean.name}" />
+                <br/>
+                <b><h:outputLabel value="E-mail: "/></b>
+                <h:outputText value="#{reservationBean.email}" />
+                <br/>
+                <b><h:outputLabel value="Nr telefonu: "/></b>
+                <h:outputText value="#{reservationBean.phoneNumber}" />
+                <br/><br/>
                 <b><h:outputLabel value="Ilość biletów normalnych: "/></b>
                 <h:outputText value="#{reservationBean.regularTicketsNumber}" />
                 <br/>
