@@ -67,14 +67,14 @@
         }
 
         #reservation-panel {
-            width: 30%;
+            width: 100%;
             padding-left: 20px;
             padding-right: 20px;
         }
 
         @media only screen and (max-width: 1000px) {
             #page-container {
-                height: 1200px;
+                height: 1100px;
             }
 
             #room-plan-and-reservation-panel-container {
@@ -87,6 +87,12 @@
 
             #reservation-panel {
                 margin-left:25px;
+                display:flex;
+            }
+
+            #reservation-panel-selected-seats {
+                margin-top:30px;
+                margin-left:40px;
             }
         }
 
@@ -131,81 +137,85 @@
 
                     </h:form>
                 </div>
-                <div id="reservation-panel">
-                    <h:form id="reservation-panel-form">
-                        <h1>Rezerwuj</h1>
+                <h:form id="reservation-panel-form">
+                    <div id="reservation-panel">
+                        <div id="reservation-panel-input">
+                            <h1>Rezerwuj</h1>
 
-                        <h:panelGroup>
-                            <b><h:outputLabel for="inputName" value="Imię i nazwisko:"/></b><br/>
-                            <p:inputText id="inputName" style="margin-bottom: 10px;" value="#{reservationBean.name}"
-                                         required="false">
-                            </p:inputText>
-                            <p:watermark for="inputName" value="Imię i nazwisko"/>
-                        </h:panelGroup><br/>
+                            <h:panelGroup>
+                                <b><h:outputLabel for="inputName" value="Imię i nazwisko:"/></b><br/>
+                                <p:inputText id="inputName" style="margin-bottom: 10px;" value="#{reservationBean.name}"
+                                             required="false">
+                                </p:inputText>
+                                <p:watermark for="inputName" value="Imię i nazwisko"/>
+                            </h:panelGroup><br/>
 
-                        <h:panelGroup>
-                            <b><h:outputLabel for="inputEmail" value="Adres e-mail: *"/></b><br/>
-                            <p:inputText id="inputEmail" style="margin-bottom: 10px;" value="#{reservationBean.email}"
-                                         required="true"
-                                         requiredMessage="Adres e-mail jest wymagany."
-                                         validatorMessage="Niepoprawny adres e-mail.">
-                                <f:validateRegex
-                                        pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
-                            </p:inputText>
-                            <p:watermark for="inputEmail" value="E-mail"/>
-                            <p:message for="inputEmail"/>
-                        </h:panelGroup>
+                            <h:panelGroup>
+                                <b><h:outputLabel for="inputEmail" value="Adres e-mail: *"/></b><br/>
+                                <p:inputText id="inputEmail" style="margin-bottom: 10px;" value="#{reservationBean.email}"
+                                             required="true"
+                                             requiredMessage="Adres e-mail jest wymagany."
+                                             validatorMessage="Niepoprawny adres e-mail.">
+                                    <f:validateRegex
+                                            pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                                </p:inputText>
+                                <p:watermark for="inputEmail" value="E-mail"/>
+                                <p:message for="inputEmail"/>
+                            </h:panelGroup>
 
-                        <h:panelGroup>
-                            <b><h:outputLabel for="inputPhoneNumber" value="Numer telefonu:"/></b><br/>
-                            <p:inputText id="inputPhoneNumber" style="margin-bottom: 10px;" value="#{reservationBean.phoneNumber}"
-                                         required="false">
-                            </p:inputText>
-                            <p:watermark for="inputPhoneNumber" value="Numer telefonu"/>
-                        </h:panelGroup>
+                            <h:panelGroup>
+                                <b><h:outputLabel for="inputPhoneNumber" value="Numer telefonu:"/></b><br/>
+                                <p:inputText id="inputPhoneNumber" style="margin-bottom: 10px;" value="#{reservationBean.phoneNumber}"
+                                             required="false">
+                                </p:inputText>
+                                <p:watermark for="inputPhoneNumber" value="Numer telefonu"/>
+                            </h:panelGroup>
 
-                        <br/><br/>
-                        <h:panelGroup id="reduced-tickets">
-                            <b><h:outputLabel for="reduced" value="Ilość biletów ulgowych:" /></b><br/>
-                            <p:selectOneMenu id="reduced" value="#{reservationBean.reducedTicketsNumber}">
-                                <f:selectItem itemLabel="Wybierz" itemValue="0" />
-                                <f:selectItems value="#{reservationBean.reducedTickets}" />
-                                <p:ajax update=":reservation-panel-form:price" listener="#{reservationBean.calculatePrice}" />
-                            </p:selectOneMenu>
-                        </h:panelGroup>
+                            <br/><br/>
+                            <h:panelGroup id="reduced-tickets">
+                                <b><h:outputLabel for="reduced" value="Ilość biletów ulgowych:" /></b><br/>
+                                <p:selectOneMenu id="reduced" value="#{reservationBean.reducedTicketsNumber}">
+                                    <f:selectItem itemLabel="Wybierz" itemValue="0" />
+                                    <f:selectItems value="#{reservationBean.reducedTickets}" />
+                                    <p:ajax update=":reservation-panel-form:price" listener="#{reservationBean.calculatePrice}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
 
-                        <br/><br/>
-                        <h:panelGroup id="price">
-                            <b><h:outputText value="Suma: "/>
-                            <h:outputText style="font-size: x-large;" value="#{reservationBean.price}"/>
-                                <h:outputText style="font-size: large;" value=" zł"/></b>
-                        </h:panelGroup>
+                            <br/><br/>
+                            <h:panelGroup id="price">
+                                <b><h:outputText value="Suma: "/>
+                                    <h:outputText style="font-size: x-large;" value="#{reservationBean.price}"/>
+                                    <h:outputText style="font-size: large;" value=" zł"/></b>
+                            </h:panelGroup>
 
-                        <br/>
-                        <h:panelGroup id="buttons">
-                            <p:commandButton value="Zarezerwuj" style="margin-top: 10px; margin-right: 10px;"
-                                             action="#{reservationBean.confirmReservation}"
-                                             disabled="#{reservationBean.regularTicketsNumber eq 0 and reservationBean.reducedTicketsNumber eq 0}"
-                                             process="@form" update="@form"/>
-                            <p:commandButton value="Kup" style="margin-top: 10px;"
-                                             action="#{reservationBean.confirmPurchase}"
-                                             disabled="#{reservationBean.regularTicketsNumber eq 0 and reservationBean.reducedTicketsNumber eq 0}"
-                                             process="@form" update="@form"/>
-                        </h:panelGroup>
+                            <br/>
+                            <h:panelGroup id="buttons">
+                                <p:commandButton value="Zarezerwuj" style="margin-top: 10px; margin-right: 10px;"
+                                                 action="#{reservationBean.confirmReservation}"
+                                                 disabled="#{reservationBean.regularTicketsNumber eq 0 and reservationBean.reducedTicketsNumber eq 0}"
+                                                 process="@form" update="@form"/>
+                                <p:commandButton value="Kup" style="margin-top: 10px;"
+                                                 action="#{reservationBean.confirmPurchase}"
+                                                 disabled="#{reservationBean.regularTicketsNumber eq 0 and reservationBean.reducedTicketsNumber eq 0}"
+                                                 process="@form" update="@form"/>
+                            </h:panelGroup>
 
-                        <br/><br/>
-                        <h:panelGroup id="selected-seats">
-                            <b><h:outputLabel value="Wybrane miejsca:" /></b><br/>
-                            <ui:repeat value="#{reservationBean.selectedSeatsList}" var="myVar">
-                                <h:outputText value="rząd "/>
-                                <h:outputText value="#{myVar.roomSeatId.rowNumber}"/>
-                                <h:outputText value=", miejsce nr "/>
-                                <h:outputText value="#{myVar.roomSeatId.seatNumber}"/><br/>
-                            </ui:repeat>
-                        </h:panelGroup>
+                            <br/><br/>
+                        </div>
 
-                    </h:form>
-                </div>
+                        <div id="reservation-panel-selected-seats">
+                            <h:panelGroup id="selected-seats">
+                                <b><h:outputLabel value="Wybrane miejsca:" /></b><br/>
+                                <ui:repeat value="#{reservationBean.selectedSeatsList}" var="myVar">
+                                    <h:outputText value="rząd "/>
+                                    <h:outputText value="#{myVar.roomSeatId.rowNumber}"/>
+                                    <h:outputText value=", miejsce nr "/>
+                                    <h:outputText value="#{myVar.roomSeatId.seatNumber}"/><br/>
+                                </ui:repeat>
+                            </h:panelGroup>
+                        </div>
+                    </div>
+                </h:form>
             </div>
         </div>
     </div>
