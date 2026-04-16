@@ -19,7 +19,7 @@
         <jsf.version>2.2.15</jsf.version>
         <primefaces.version>7.0</primefaces.version>
         <primefaces.themes.version>1.0.10</primefaces.themes.version>
-        <omnifaces.version>3.3</omnifaces.version>
+        <omnifaces.version>3.14.16</omnifaces.version>
         <richfaces.version>4.3.7.Final</richfaces.version>
 
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
